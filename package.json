@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "mqtt": "^3.0.0",
-    "pulsemixer": "^1.0.3"
+    "pulsemixer": "^1.0.3",
+    "win-audio": "^2.0.2"
   }
 }

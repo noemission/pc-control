@@ -3,15 +3,26 @@ const Pulsemixer = require('pulsemixer');
 const client = mqtt.connect('mqtt://192.168.1.200:1883')
 const pulsemixer = new Pulsemixer();
 const exec = require('child_process').exec;
+const os = require('os')
 
-const { PC, audio, monitor } = require('./linux_functions')
+let systemFunctions
+if(os.platform() === 'win32'){
+    console.log('its win 32')
+    systemFunctions = require('./windows_functions')
+}else{
+    console.log('its something else')
+
+    systemFunctions = require('./linux_functions')
+}
+
+const { PC, audio, monitor } = systemFunctions
 
 client.on('connect', function () {
     console.log('connected')
 
     setInterval(publishVolume, 2000)
     setInterval(publishPower, 10000)
-    setInterval(publishMonitorStatus, 5000)
+    // setInterval(publishMonitorStatus, 5000)
 
     client.subscribe('cmnd/computer/power')
     client.subscribe('cmnd/computer/volume')
